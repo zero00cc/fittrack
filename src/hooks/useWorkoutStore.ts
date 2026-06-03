@@ -22,7 +22,7 @@ export function useWorkoutStore() {
   );
 
   const activatePlan = useCallback(
-    (planId: string) => {
+    (planId: string, weeklySchedule: number[]) => {
       setWorkoutState({
         ...workoutState,
         activePlanId: planId,
@@ -30,6 +30,7 @@ export function useWorkoutStore() {
           planId,
           startDate: todayYMD(),
           dayStatus: {},
+          weeklySchedule,
         },
       });
     },

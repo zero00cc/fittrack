@@ -51,3 +51,31 @@ export function isoToDisplay(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00');
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 }
+
+// Returns the Monday (YYYY-MM-DD) of the calendar week containing dateStr.
+export function getWeekMonday(dateStr: string): string {
+  const d = new Date(dateStr + 'T00:00:00');
+  const dow = d.getDay(); // 0=Sun
+  const daysToMonday = dow === 0 ? -6 : 1 - dow;
+  d.setDate(d.getDate() + daysToMonday);
+  return toYMD(d);
+}
+
+// Returns the absolute dates for `count` consecutive training days starting from
+// the first occurrence of any day in weeklySchedule on or after startDate.
+// weeklySchedule uses JS Date.getDay() values (0=Sun … 6=Sat).
+export function getTrainingDates(
+  startDate: string,
+  weeklySchedule: number[],
+  count: number,
+): string[] {
+  if (weeklySchedule.length === 0 || count === 0) return [];
+  const sorted = new Set(weeklySchedule);
+  const dates: string[] = [];
+  const cursor = new Date(startDate + 'T00:00:00');
+  while (dates.length < count) {
+    if (sorted.has(cursor.getDay())) dates.push(toYMD(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return dates;
+}

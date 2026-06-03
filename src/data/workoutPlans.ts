@@ -288,6 +288,7 @@ export const workoutPlans: WorkoutPlan[] = [
     description:
       'A 4-week full-body program training 3 days per week. Focuses on the fundamental compound movements — squat, bench press, deadlift, overhead press, and row. Ideal for those new to weight training who want to build a strong movement foundation and develop consistent gym habits.',
     days: buildBeginnerDays(),
+    defaultWeeklySchedule: [1, 3, 5], // Mon / Wed / Fri
   },
   {
     id: 'plan-intermediate',
@@ -297,6 +298,7 @@ export const workoutPlans: WorkoutPlan[] = [
     description:
       'A 5-week upper/lower split training 4 days per week. Volume increases in weeks 3–5 to drive continued adaptation. You will train two distinct upper-body days and two lower-body days, hitting each muscle group twice a week with appropriate variation.',
     days: buildIntermediateDays(),
+    defaultWeeklySchedule: [1, 2, 4, 5], // Mon / Tue / Thu / Fri
   },
   {
     id: 'plan-professional',
@@ -306,6 +308,7 @@ export const workoutPlans: WorkoutPlan[] = [
     description:
       'A 6-week high-volume Push/Pull/Legs program training 6 days per week. Targets maximum hypertrophy through high frequency and progressive overload. Week 6 is a planned deload to allow recovery and supercompensation before the next training block.',
     days: buildProfessionalDays(),
+    defaultWeeklySchedule: [1, 2, 3, 4, 5, 6], // Mon – Sat
   },
   {
     id: 'plan-meta531',
@@ -315,5 +318,6 @@ export const workoutPlans: WorkoutPlan[] = [
     description:
       'A powerlifting-focused 4-day program built around the squat, bench press, and deadlift. Each session prescribes sets, reps, and RPE targets — fields marked "—" are not yet prescribed and should be filled in based on your current training max. Week 1 is loaded; more weeks will be added over time.',
     days: buildMeta531Days(),
+    defaultWeeklySchedule: [1, 2, 4, 5], // Mon / Tue / Thu / Fri
   },
 ];

@@ -3,16 +3,16 @@ import { useWorkoutStore } from '../hooks/useWorkoutStore';
 import { workoutPlans } from '../data/workoutPlans';
 import { LevelSelector } from '../components/workout/LevelSelector';
 import { PlanList } from '../components/workout/PlanList';
+import { SchedulePicker } from '../components/workout/SchedulePicker';
 import { PlanOverview } from '../components/workout/PlanOverview';
 import { WorkoutCalendar } from '../components/workout/WorkoutCalendar';
 import { TrainingLevel, WorkoutPlan } from '../types/workout.types';
 
-type View = 'level' | 'plans' | 'detail';
+type View = 'level' | 'plans' | 'schedule' | 'detail';
 
 export function WorkoutPlansPage() {
   const { workoutState, setLevel, activatePlan, updateDayStatus, resetPlan } = useWorkoutStore();
 
-  // Determine initial view based on persisted state
   const getInitialView = (): View => {
     if (workoutState.activePlanId && workoutState.progress) return 'detail';
     if (workoutState.selectedLevel) return 'plans';
@@ -20,6 +20,8 @@ export function WorkoutPlansPage() {
   };
 
   const [view, setView] = useState<View>(getInitialView);
+  // Holds the plan the user clicked on the plan list, before confirming the schedule
+  const [pendingPlan, setPendingPlan] = useState<WorkoutPlan | null>(null);
 
   function handleSelectLevel(level: TrainingLevel) {
     setLevel(level);
@@ -27,12 +29,20 @@ export function WorkoutPlansPage() {
   }
 
   function handleSelectPlan(plan: WorkoutPlan) {
-    activatePlan(plan.id);
+    setPendingPlan(plan);
+    setView('schedule');
+  }
+
+  function handleConfirmSchedule(weeklySchedule: number[]) {
+    if (!pendingPlan) return;
+    activatePlan(pendingPlan.id, weeklySchedule);
+    setPendingPlan(null);
     setView('detail');
   }
 
   function handleReset() {
     resetPlan();
+    setPendingPlan(null);
     setView('plans');
   }
 
@@ -60,6 +70,14 @@ export function WorkoutPlansPage() {
           activePlanId={workoutState.activePlanId}
           onSelect={handleSelectPlan}
           onBack={() => setView('level')}
+        />
+      )}
+
+      {view === 'schedule' && pendingPlan && (
+        <SchedulePicker
+          plan={pendingPlan}
+          onConfirm={handleConfirmSchedule}
+          onBack={() => setView('plans')}
         />
       )}
 
