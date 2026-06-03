@@ -1,0 +1,58 @@
+import { useCallback } from 'react';
+import { useLocalStorage } from './useLocalStorage';
+import { WorkoutState, TrainingLevel, DayStatus } from '../types/workout.types';
+import { todayYMD } from '../utils/dateUtils';
+
+const WORKOUT_KEY = 'fittrack_workout_state';
+
+const defaultState: WorkoutState = {
+  selectedLevel: null,
+  activePlanId: null,
+  progress: null,
+};
+
+export function useWorkoutStore() {
+  const [workoutState, setWorkoutState] = useLocalStorage<WorkoutState>(WORKOUT_KEY, defaultState);
+
+  const setLevel = useCallback(
+    (level: TrainingLevel) => {
+      setWorkoutState({ ...workoutState, selectedLevel: level, activePlanId: null, progress: null });
+    },
+    [workoutState, setWorkoutState],
+  );
+
+  const activatePlan = useCallback(
+    (planId: string) => {
+      setWorkoutState({
+        ...workoutState,
+        activePlanId: planId,
+        progress: {
+          planId,
+          startDate: todayYMD(),
+          dayStatus: {},
+        },
+      });
+    },
+    [workoutState, setWorkoutState],
+  );
+
+  const updateDayStatus = useCallback(
+    (dayNumber: number, status: DayStatus) => {
+      if (!workoutState.progress) return;
+      setWorkoutState({
+        ...workoutState,
+        progress: {
+          ...workoutState.progress,
+          dayStatus: { ...workoutState.progress.dayStatus, [dayNumber]: status },
+        },
+      });
+    },
+    [workoutState, setWorkoutState],
+  );
+
+  const resetPlan = useCallback(() => {
+    setWorkoutState({ ...workoutState, activePlanId: null, progress: null });
+  }, [workoutState, setWorkoutState]);
+
+  return { workoutState, setLevel, activatePlan, updateDayStatus, resetPlan };
+}

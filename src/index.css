@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Override react-calendar default styles to integrate with Tailwind */
+.react-calendar {
+  border: none !important;
+  font-family: inherit !important;
+  width: 100% !important;
+}
+
+.react-calendar__navigation button {
+  font-size: 0.875rem;
+}
+
+.react-calendar__tile {
+  padding: 0.4em 0.25em !important;
+  font-size: 0.75rem !important;
+}
+
+.react-calendar__tile--active {
+  background: #10b981 !important;
+  color: white !important;
+  border-radius: 6px;
+}
+
+.react-calendar__tile--now {
+  background: #f0fdf4 !important;
+  border-radius: 6px;
+}
+
+.react-calendar__tile:hover {
+  background: #f3f4f6 !important;
+  border-radius: 6px;
+}
