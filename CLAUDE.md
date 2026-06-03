@@ -65,11 +65,29 @@ src/
 - YouTube links are placeholders — replace `youtubeUrl` values in `src/data/workoutPlans.ts`
 - Food list can be expanded in `src/data/foods.ts`
 
-## Git workflow
+## Git workflow — REQUIRED
+
+**Commit and push to GitHub regularly throughout every session.** This is non-negotiable: the user relies on GitHub as the single source of truth and must be able to revert to any previous state at any time.
+
+### Rules
+- **Commit after every meaningful unit of work** — a completed component, a bug fix, a data change. Do not batch multiple unrelated changes into one commit.
+- **Push immediately after every commit.** Never leave committed work sitting locally.
+- **Never end a session without committing and pushing all completed work.**
+- Commit style: conventional commits — `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`
+- Write commit messages that describe *why*, not just *what* (e.g. `feat: add calorie trend chart for 90-day history` not `update chart`)
+- Stage specific files by name — never `git add -A` or `git add .` blindly
+
+### Workflow per change
+```bash
+git add <specific files>
+git commit -m "feat: description of what and why"
+git push
+```
+
+### Recovery
+- `git log --oneline` — review history
+- `git revert <hash>` — safely undo a commit without rewriting history
 - Remote: https://github.com/zero00cc/fittrack (branch: `main`)
-- Commit style: conventional commits — `feat:`, `fix:`, `refactor:`, `chore:`
-- Always push to GitHub after each meaningful change so there's a saved version to revert to
-- Use `git log --oneline` to review history; `git revert <hash>` to undo a commit safely
 
 ## Known limitations / future work
 - YouTube URLs in workout plans are search-query placeholders — real links to be added by the user
