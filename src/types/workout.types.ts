@@ -2,11 +2,24 @@ export type TrainingLevel = 'beginner' | 'intermediate' | 'professional';
 
 export type DayStatus = 'unfinished' | 'finished' | 'skipped';
 
+// One row in a detailed set prescription (Sets, Reps, RPE, Load).
+// null means the value is not prescribed — user fills it in.
+export interface SetBlock {
+  sets: number;
+  reps: number | null;
+  rpe: number | null;
+  load: number | null;
+}
+
 export interface Exercise {
   id: string;
   name: string;
-  sets: number;
-  reps: string;
+  label?: string;       // "A", "B", "C" — shown for structured plans
+  // Simple format (existing plans)
+  sets?: number;
+  reps?: string;
+  // Detailed format (plans imported from txt files)
+  setBlocks?: SetBlock[];
   youtubeUrl: string;
   notes?: string;
 }

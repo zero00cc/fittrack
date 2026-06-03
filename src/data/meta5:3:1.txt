@@ -1,0 +1,84 @@
+Week 1, Day 1
+A. Squat
+Sets, Reps, RPE, Load
+1,5,-,-
+1,5,-,-
+2,5,-,-
+B. 2ct Pause bench
+Sets, Reps, RPE, Load
+1,3,-,-
+1,1,5,-
+1,1,7,-
+3,5,-,-
+C. Leg Press
+Sets, Reps, RPE, Load
+3,10,8,-
+2,8,6,-
+2,8,8,-
+
+Week 1, Day 2
+A. Spoto Press (bench)
+Sets, Reps, RPE, Load
+1,4,5,-
+1,2,7,-
+2,2,8,-
+2,4,7,-
+B. Deadlift
+Sets, Reps, RPE, Load
+1,5,-,-
+1,5,-,-
+2,5,-,-
+C. Dumbbell Romanian (deadlift)
+Sets, Reps, RPE, Load
+3,10,7,-
+D. Pullups
+Sets, Reps, RPE, Load
+3,-,-,-
+E. One-arm Dumbbell Row
+Sets, Reps, RPE, Load
+2,8,6,-
+2,8,8,-
+
+Week 1, Day 3
+A. Squat
+Sets, Reps, RPE, Load
+1,6,-,-
+1,6,-,-
+1,6,-,-
+2,6,-,-
+B. 2ct Pause Close Grip (bench)
+Sets, Reps, RPE, Load
+1,3,-,-
+1,3,-,-
+2,3,-,-
+2,6,-,-
+C. Dumbbell Military Press
+Sets, Reps, RPE, Load
+3,10,8,-
+D. Dumbbell Bicep Curl
+3,12,8,-
+E. Overhead Triceps Extension
+Sets, Reps, RPE, Load
+3,12,8,-
+
+Week 1, Day 4
+A. Squat
+Sets, Reps, RPE, Load
+1,3,-,-
+1,3,-,6
+2,3,8,-
+B. Bench
+Sets, Reps, RPE, Load
+1,3,-,-
+1,3,6,-
+2,3,8,-
+1,3,-,-
+C. Deadlift
+Sets, Reps, RPE, Load
+1,3,-,-
+1,3,6,-
+2,3,8,-
+1,6,-,-
+
+
+
