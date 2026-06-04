@@ -32,6 +32,28 @@ export function NavBar() {
         >
           Workout Plans
         </Link>
+        <Link
+          to="/exercises"
+          className={clsx(
+            'text-sm font-medium px-3 py-1.5 rounded-md transition-colors',
+            pathname.startsWith('/exercises')
+              ? 'bg-emerald-600 text-white'
+              : 'text-gray-300 hover:text-white hover:bg-gray-700',
+          )}
+        >
+          Exercises
+        </Link>
+        <Link
+          to="/gallery"
+          className={clsx(
+            'text-sm font-medium px-3 py-1.5 rounded-md transition-colors',
+            pathname.startsWith('/gallery')
+              ? 'bg-emerald-600 text-white'
+              : 'text-gray-300 hover:text-white hover:bg-gray-700',
+          )}
+        >
+          Gallery
+        </Link>
       </div>
     </nav>
   );

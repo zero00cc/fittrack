@@ -3,6 +3,8 @@ import { NavBar } from './components/common/NavBar';
 import { HomePage } from './pages/HomePage';
 import { CalorieTrackerPage } from './pages/CalorieTrackerPage';
 import { WorkoutPlansPage } from './pages/WorkoutPlansPage';
+import { ExercisesPage } from './pages/ExercisesPage';
+import { GalleryPage } from './pages/GalleryPage';
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/calories" element={<CalorieTrackerPage />} />
         <Route path="/workouts" element={<WorkoutPlansPage />} />
+        <Route path="/exercises" element={<ExercisesPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
       </Routes>
     </div>
   );
