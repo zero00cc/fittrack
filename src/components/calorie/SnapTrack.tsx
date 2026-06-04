@@ -125,6 +125,10 @@ export function SnapTrack({ onAddEntries }: Props) {
     );
   }
 
+  function deleteItem(uid: string) {
+    setItems((prev) => prev.filter((i) => i.uid !== uid));
+  }
+
   function addItem(uid: string) {
     const item = items.find((i) => i.uid === uid);
     if (!item) return;
@@ -222,7 +226,7 @@ export function SnapTrack({ onAddEntries }: Props) {
                     <th className="pb-1 font-medium">Food</th>
                     <th className="pb-1 font-medium text-right w-20">Grams</th>
                     <th className="pb-1 font-medium text-right w-16">kcal</th>
-                    <th className="pb-1 w-8"></th>
+                    <th className="pb-1 w-16"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -241,13 +245,22 @@ export function SnapTrack({ onAddEntries }: Props) {
                       </td>
                       <td className="py-1.5 text-right font-medium text-gray-700 pr-2">{item.editedKcal}</td>
                       <td className="py-1.5 text-right">
-                        <button
-                          onClick={() => addItem(item.uid)}
-                          title="Add to log"
-                          className="text-emerald-500 hover:text-emerald-700 text-lg leading-none"
-                        >
-                          +
-                        </button>
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            onClick={() => deleteItem(item.uid)}
+                            title="Remove item"
+                            className="text-gray-300 hover:text-red-400 text-sm leading-none"
+                          >
+                            ✕
+                          </button>
+                          <button
+                            onClick={() => addItem(item.uid)}
+                            title="Add to log"
+                            className="text-emerald-500 hover:text-emerald-700 text-lg leading-none"
+                          >
+                            +
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
