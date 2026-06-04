@@ -52,11 +52,11 @@ export function useWorkoutStore() {
   );
 
   const updateSetProgress = useCallback(
-    (dayNumber: number, exerciseId: string, completedSets: number) => {
+    (dayNumber: number, key: string, completedSets: number) => {
       if (!workoutState.progress) return;
       const existing = workoutState.progress.setProgress ?? {};
       const dayMap = { ...(existing[dayNumber] ?? {}) };
-      dayMap[exerciseId] = completedSets;
+      dayMap[key] = completedSets;
       setWorkoutState({
         ...workoutState,
         progress: {

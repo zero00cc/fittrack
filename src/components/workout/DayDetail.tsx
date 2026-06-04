@@ -5,27 +5,32 @@ import { Badge } from '../common/Badge';
 interface Props {
   day: WorkoutDay;
   status: DayStatus;
-  daySetProgress: { [exerciseId: string]: number };
+  daySetProgress: { [key: string]: number }; // key = `${exerciseId}-${blockIndex}`
   onUpdateStatus: (status: DayStatus) => void;
-  onUpdateSetProgress: (exerciseId: string, completedSets: number) => void;
+  onUpdateSetProgress: (key: string, completedSets: number) => void;
   onClose: () => void;
 }
 
-function totalSetsForExercise(ex: Exercise): number {
-  if (ex.setBlocks) return ex.setBlocks.reduce((s, b) => s + b.sets, 0);
-  return ex.sets ?? 1;
+function blockKey(exerciseId: string, blockIndex: number): string {
+  return `${exerciseId}-${blockIndex}`;
+}
+
+function isExerciseDone(ex: Exercise, progress: { [key: string]: number }): boolean {
+  if (ex.setBlocks) {
+    return ex.setBlocks.every((block, i) => (progress[blockKey(ex.id, i)] ?? 0) >= block.sets);
+  }
+  return (progress[blockKey(ex.id, 0)] ?? 0) >= (ex.sets ?? 1);
 }
 
 export function DayDetail({ day, status, daySetProgress, onUpdateStatus, onUpdateSetProgress, onClose }: Props) {
-  function handleSetUpdate(exerciseId: string, newCount: number) {
-    onUpdateSetProgress(exerciseId, newCount);
+  function handleBlockUpdate(exerciseId: string, blockIndex: number, newCount: number) {
+    const key = blockKey(exerciseId, blockIndex);
+    onUpdateSetProgress(key, newCount);
 
     if (day.exercises.length === 0) return;
 
-    const updated = { ...daySetProgress, [exerciseId]: newCount };
-    const allDone = day.exercises.every(
-      (ex) => (updated[ex.id] ?? 0) >= totalSetsForExercise(ex),
-    );
+    const updated = { ...daySetProgress, [key]: newCount };
+    const allDone = day.exercises.every((ex) => isExerciseDone(ex, updated));
 
     if (allDone) {
       onUpdateStatus('finished');
@@ -55,15 +60,19 @@ export function DayDetail({ day, status, daySetProgress, onUpdateStatus, onUpdat
             <p className="text-sm text-gray-400 italic py-4">Rest day — no exercises scheduled.</p>
           ) : (
             <div className="flex flex-col">
-              {day.exercises.map((ex) => (
-                <ExerciseCard
-                  key={ex.id}
-                  exercise={ex}
-                  completedSets={daySetProgress[ex.id] ?? 0}
-                  totalSets={totalSetsForExercise(ex)}
-                  onUpdateSets={(n) => handleSetUpdate(ex.id, n)}
-                />
-              ))}
+              {day.exercises.map((ex) => {
+                const blockProgress = ex.setBlocks
+                  ? ex.setBlocks.map((_, i) => daySetProgress[blockKey(ex.id, i)] ?? 0)
+                  : [daySetProgress[blockKey(ex.id, 0)] ?? 0];
+                return (
+                  <ExerciseCard
+                    key={ex.id}
+                    exercise={ex}
+                    blockProgress={blockProgress}
+                    onUpdateBlock={(blockIndex, n) => handleBlockUpdate(ex.id, blockIndex, n)}
+                  />
+                );
+              })}
             </div>
           )}
         </div>

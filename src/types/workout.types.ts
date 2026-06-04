@@ -49,8 +49,8 @@ export interface PlanProgress {
   dayStatus: { [dayNumber: number]: DayStatus };
   // Actual days of the week the user chose to train (JS Date.getDay() values)
   weeklySchedule: number[];
-  // Completed set counts per day per exercise: dayNumber → exerciseId → completedSets
-  setProgress?: { [dayNumber: number]: { [exerciseId: string]: number } };
+  // Completed set counts: dayNumber → `${exerciseId}-${blockIndex}` → completedSets
+  setProgress?: { [dayNumber: number]: { [key: string]: number } };
 }
 
 export interface WorkoutState {

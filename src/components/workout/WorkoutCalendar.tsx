@@ -8,7 +8,7 @@ interface Props {
   plan: WorkoutPlan;
   progress: PlanProgress;
   onUpdateStatus: (dayNumber: number, status: DayStatus) => void;
-  onUpdateSetProgress: (dayNumber: number, exerciseId: string, completedSets: number) => void;
+  onUpdateSetProgress: (dayNumber: number, key: string, completedSets: number) => void;
 }
 
 // Display order Mon…Sun → JS dow values
@@ -145,7 +145,7 @@ export function WorkoutCalendar({ plan, progress, onUpdateStatus, onUpdateSetPro
           status={selectedStatus}
           daySetProgress={progress.setProgress?.[selectedDay.dayNumber] ?? {}}
           onUpdateStatus={(s) => onUpdateStatus(selectedDay.dayNumber, s)}
-          onUpdateSetProgress={(exId, n) => onUpdateSetProgress(selectedDay.dayNumber, exId, n)}
+          onUpdateSetProgress={(key, n) => onUpdateSetProgress(selectedDay.dayNumber, key, n)}
           onClose={() => setSelectedDay(null)}
         />
       )}
