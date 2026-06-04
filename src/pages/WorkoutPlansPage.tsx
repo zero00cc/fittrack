@@ -14,7 +14,8 @@ export function WorkoutPlansPage() {
   const { workoutState, setLevel, activatePlan, updateDayStatus, updateSetProgress, resetPlan } = useWorkoutStore();
 
   const getInitialView = (): View => {
-    if (workoutState.activePlanId && workoutState.progress) return 'detail';
+    const planExists = workoutPlans.some((p) => p.id === workoutState.activePlanId);
+    if (workoutState.activePlanId && workoutState.progress && planExists) return 'detail';
     if (workoutState.selectedLevel) return 'plans';
     return 'level';
   };
@@ -79,6 +80,15 @@ export function WorkoutPlansPage() {
           onConfirm={handleConfirmSchedule}
           onBack={() => setView('plans')}
         />
+      )}
+
+      {view === 'detail' && !activePlan && (
+        <div className="text-center py-12 text-gray-400">
+          <p className="text-sm">Plan not found.</p>
+          <button onClick={() => setView('level')} className="mt-3 text-sm text-emerald-600 hover:underline">
+            ← Back to levels
+          </button>
+        </div>
       )}
 
       {view === 'detail' && activePlan && workoutState.progress && (
