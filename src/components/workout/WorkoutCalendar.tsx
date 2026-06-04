@@ -8,13 +8,14 @@ interface Props {
   plan: WorkoutPlan;
   progress: PlanProgress;
   onUpdateStatus: (dayNumber: number, status: DayStatus) => void;
+  onUpdateSetProgress: (dayNumber: number, exerciseId: string, completedSets: number) => void;
 }
 
 // Display order Mon…Sun → JS dow values
 const DOW_ORDER = [1, 2, 3, 4, 5, 6, 0];
 const DOW_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export function WorkoutCalendar({ plan, progress, onUpdateStatus }: Props) {
+export function WorkoutCalendar({ plan, progress, onUpdateStatus, onUpdateSetProgress }: Props) {
   const [selectedDay, setSelectedDay] = useState<WorkoutDay | null>(null);
   const today = toYMD(new Date());
 
@@ -142,7 +143,9 @@ export function WorkoutCalendar({ plan, progress, onUpdateStatus }: Props) {
         <DayDetail
           day={selectedDay}
           status={selectedStatus}
+          daySetProgress={progress.setProgress?.[selectedDay.dayNumber] ?? {}}
           onUpdateStatus={(s) => onUpdateStatus(selectedDay.dayNumber, s)}
+          onUpdateSetProgress={(exId, n) => onUpdateSetProgress(selectedDay.dayNumber, exId, n)}
           onClose={() => setSelectedDay(null)}
         />
       )}

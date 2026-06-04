@@ -51,9 +51,26 @@ export function useWorkoutStore() {
     [workoutState, setWorkoutState],
   );
 
+  const updateSetProgress = useCallback(
+    (dayNumber: number, exerciseId: string, completedSets: number) => {
+      if (!workoutState.progress) return;
+      const existing = workoutState.progress.setProgress ?? {};
+      const dayMap = { ...(existing[dayNumber] ?? {}) };
+      dayMap[exerciseId] = completedSets;
+      setWorkoutState({
+        ...workoutState,
+        progress: {
+          ...workoutState.progress,
+          setProgress: { ...existing, [dayNumber]: dayMap },
+        },
+      });
+    },
+    [workoutState, setWorkoutState],
+  );
+
   const resetPlan = useCallback(() => {
     setWorkoutState({ ...workoutState, activePlanId: null, progress: null });
   }, [workoutState, setWorkoutState]);
 
-  return { workoutState, setLevel, activatePlan, updateDayStatus, resetPlan };
+  return { workoutState, setLevel, activatePlan, updateDayStatus, updateSetProgress, resetPlan };
 }

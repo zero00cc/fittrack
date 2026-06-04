@@ -1,5 +1,12 @@
 import { Exercise, SetBlock } from '../../types/workout.types';
 
+interface Props {
+  exercise: Exercise;
+  completedSets: number;
+  totalSets: number;
+  onUpdateSets: (newCount: number) => void;
+}
+
 function fmt(val: number | null): string {
   return val === null ? '—' : String(val);
 }
@@ -29,16 +36,19 @@ function SetBlockTable({ blocks }: { blocks: SetBlock[] }) {
   );
 }
 
-export function ExerciseCard({ exercise }: { exercise: Exercise }) {
+export function ExerciseCard({ exercise, completedSets, totalSets, onUpdateSets }: Props) {
   const title = exercise.label ? `${exercise.label}. ${exercise.name}` : exercise.name;
+  const allDone = completedSets >= totalSets;
 
   return (
-    <div className="py-2.5 border-b border-gray-100 last:border-0">
+    <div className={`py-2.5 border-b border-gray-100 last:border-0 ${allDone ? 'opacity-60' : ''}`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-medium text-sm text-gray-800">{title}</span>
-            {/* Simple format pill */}
+            {allDone && <span className="text-emerald-500 text-sm">✓</span>}
+            <span className={`font-medium text-sm ${allDone ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+              {title}
+            </span>
             {!exercise.setBlocks && exercise.sets !== undefined && exercise.reps !== undefined && (
               <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                 {exercise.sets} × {exercise.reps}
@@ -46,7 +56,6 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
             )}
           </div>
           {exercise.notes && <p className="text-xs text-gray-400 mt-0.5">{exercise.notes}</p>}
-          {/* Detailed format table */}
           {exercise.setBlocks && <SetBlockTable blocks={exercise.setBlocks} />}
         </div>
 
@@ -61,6 +70,27 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
           </svg>
           Watch
         </a>
+      </div>
+
+      {/* Set counter */}
+      <div className="flex items-center gap-2 mt-2">
+        <button
+          onClick={() => onUpdateSets(Math.max(0, completedSets - 1))}
+          disabled={completedSets === 0}
+          className="w-6 h-6 rounded-full border border-gray-300 text-gray-500 text-sm font-bold flex items-center justify-center hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        >
+          −
+        </button>
+        <span className={`text-xs font-semibold w-12 text-center ${allDone ? 'text-emerald-600' : 'text-gray-600'}`}>
+          {completedSets} / {totalSets} sets
+        </span>
+        <button
+          onClick={() => onUpdateSets(Math.min(totalSets, completedSets + 1))}
+          disabled={allDone}
+          className="w-6 h-6 rounded-full border border-gray-300 text-gray-500 text-sm font-bold flex items-center justify-center hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+        >
+          +
+        </button>
       </div>
     </div>
   );

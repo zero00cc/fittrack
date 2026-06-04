@@ -11,7 +11,7 @@ import { TrainingLevel, WorkoutPlan } from '../types/workout.types';
 type View = 'level' | 'plans' | 'schedule' | 'detail';
 
 export function WorkoutPlansPage() {
-  const { workoutState, setLevel, activatePlan, updateDayStatus, resetPlan } = useWorkoutStore();
+  const { workoutState, setLevel, activatePlan, updateDayStatus, updateSetProgress, resetPlan } = useWorkoutStore();
 
   const getInitialView = (): View => {
     if (workoutState.activePlanId && workoutState.progress) return 'detail';
@@ -93,6 +93,7 @@ export function WorkoutPlansPage() {
             plan={activePlan}
             progress={workoutState.progress}
             onUpdateStatus={updateDayStatus}
+            onUpdateSetProgress={updateSetProgress}
           />
         </div>
       )}
