@@ -8,7 +8,7 @@ export function HomePage() {
         <p className="text-gray-500 mt-3 text-lg">Track your nutrition and train with purpose.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl md:max-w-3xl">
         <Link
           to="/calories"
           className="flex flex-col items-start gap-3 rounded-2xl bg-white border-2 border-emerald-200 p-6 shadow hover:shadow-md hover:border-emerald-400 transition-all group"
@@ -35,6 +35,34 @@ export function HomePage() {
             Choose a structured training plan by level, follow daily workouts, and track your progress.
           </p>
           <span className="mt-auto text-sm font-semibold text-blue-600">Open Plans →</span>
+        </Link>
+
+        <Link
+          to="/exercises"
+          className="flex flex-col items-start gap-3 rounded-2xl bg-white border-2 border-purple-200 p-6 shadow hover:shadow-md hover:border-purple-400 transition-all group"
+        >
+          <div className="text-4xl">🎬</div>
+          <h2 className="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">
+            Exercise Library
+          </h2>
+          <p className="text-sm text-gray-500">
+            Watch video demonstrations and read step-by-step guidance for key exercises.
+          </p>
+          <span className="mt-auto text-sm font-semibold text-purple-600">View Exercises →</span>
+        </Link>
+
+        <Link
+          to="/gallery"
+          className="flex flex-col items-start gap-3 rounded-2xl bg-white border-2 border-orange-200 p-6 shadow hover:shadow-md hover:border-orange-400 transition-all group"
+        >
+          <div className="text-4xl">📸</div>
+          <h2 className="text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors">
+            Gallery
+          </h2>
+          <p className="text-sm text-gray-500">
+            Upload and browse photos of your daily meals and workout sessions.
+          </p>
+          <span className="mt-auto text-sm font-semibold text-orange-600">Open Gallery →</span>
         </Link>
       </div>
     </div>
