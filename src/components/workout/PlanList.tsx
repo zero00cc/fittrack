@@ -28,6 +28,13 @@ export function PlanList({ plans, level, activePlanId, onSelect, onBack }: Props
         <button onClick={onBack} className="text-sm text-emerald-600 hover:underline">← Back</button>
         <h2 className="text-xl font-bold text-gray-800">{levelLabel[level]} Plans</h2>
       </div>
+      {plans.length === 0 && (
+        <div className="rounded-xl border-2 border-dashed border-gray-200 bg-white p-10 text-center text-gray-400">
+          <div className="text-3xl mb-2">🚧</div>
+          <p className="text-sm font-medium">No plans available yet</p>
+          <p className="text-xs mt-1">Plans for this level are coming soon.</p>
+        </div>
+      )}
       <div className="flex flex-col gap-3">
         {plans.map((plan) => (
           <button
